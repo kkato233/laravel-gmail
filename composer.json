@@ -1,13 +1,13 @@
 {
-    "name": "ad5jp/laravel-gmail",
+    "name": "kkato233/laravel-gmail",
     "description": "Laravel Mail Driver for Gmail API via Service Account",
     "type": "library",
     "keywords": [
         "laravel"
     ],
     "support": {
-        "issues": "https://github.com/ad5jp/laravel-gmail/issues",
-        "source": "https://github.com/ad5jp/laravel-gmail"
+        "issues": "https://github.com/kkato233/laravel-gmail/issues",
+        "source": "https://github.com/kkato233/laravel-gmail"
     },
     "require": {
         "php": "^7.2|^8.0",
@@ -18,13 +18,13 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "AD5jp\\LaravelGmail\\": "./src/"
+            "kkato233\\LaravelGmail\\": "./src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "AD5jp\\LaravelGmail\\LaravelGmailServiceProvider"
+                "kkato233\\LaravelGmail\\LaravelGmailServiceProvider"
             ]
         }
     }
