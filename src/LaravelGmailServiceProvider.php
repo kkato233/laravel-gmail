@@ -1,8 +1,8 @@
 <?php
 
-namespace AD5jp\LaravelGmail;
+namespace kkato233\LaravelGmail;
 
-use AD5jp\LaravelGmail\GmailTransport;
+use kkato233\LaravelGmail\GmailTransport;
 use Illuminate\Support\ServiceProvider;
 
 class LaravelGmailServiceProvider extends ServiceProvider

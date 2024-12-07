@@ -1,6 +1,6 @@
 <?php
 
-namespace AD5jp\LaravelGmail;
+namespace kkato233\LaravelGmail;
 
 use Google\Client;
 use Google\Service\Gmail;
