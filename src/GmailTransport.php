@@ -22,32 +22,25 @@ class GmailTransport extends AbstractTransport
         
         $SCOPES = implode(' ', [Gmail::GMAIL_SEND]);
         $APPLICATION_NAME = 'LaravelGmail';
+        $GMAIL_CLIENT_SECRET_PATH = $_ENV["GMAIL_CLIENT_SECRET_PATH"];
 
         $this->client = new Client();
         $this->client->setApplicationName($APPLICATION_NAME);
         $this->client->setScopes($SCOPES);
-        $this->client->setAuthConfig($service_account_key);
-        $this->client->setAccessType('offline');
+        $this->client->setAuthConfig($GMAIL_CLIENT_SECRET_PATH);
+        $this->client->setAccessType('online');
         
-        // ファイルが無い場合にブラウザから認証を行う
-        if (!file_exists($service_account_key)) {
-            $authUrl = $this->client->createAuthUrl();
-            printf("Open the following link in your browser:\n%s\n", $authUrl);
-            print 'Enter verification code: ';
-            $authCode = trim(fgets(STDIN));
-            $accessToken = $this->client->fetchAccessTokenWithAuthCode($authCode);
-            if (!file_exists(dirname($service_account_key))) {
-                mkdir(dirname($service_account_key), 0700, true);
-            }
-            file_put_contents($service_account_key, json_encode($accessToken));
-            printf("Credentials saved to %s\n", $service_account_key);
-        }
         $accessToken = json_decode(file_get_contents($service_account_key), true);
         $this->client->setAccessToken($accessToken);
         // リフレッシュトークンを使ってアクセストークンを更新する
         if ($this->client->isAccessTokenExpired()) {
-            $this->client->fetchAccessTokenWithRefreshToken($this->client->getRefreshToken());
-            file_put_contents($credentialsPath, json_encode($this->client->getAccessToken()));
+            $refreshToken = $this->client->getRefreshToken();
+            if (!$refreshToken) {
+                throw new Exception("refresh token not found in " . $service_account_key);
+            }
+            
+            $this->client->fetchAccessTokenWithRefreshToken($refreshToken);
+            file_put_contents($service_account_key, json_encode($this->client->getAccessToken()));
         }
         
         parent::__construct();

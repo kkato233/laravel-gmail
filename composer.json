@@ -27,5 +27,8 @@
                 "kkato233\\LaravelGmail\\LaravelGmailServiceProvider"
             ]
         }
-    }
+    },
+    "bin": [
+        "laravel-gmail"
+    ]
 }
