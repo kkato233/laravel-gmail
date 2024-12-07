@@ -17,7 +17,6 @@ class GmailTransport extends AbstractTransport
     {
         $this->config = $config['mailers']['gmail'];
 
-        $from_address = $this->config['from_address'];
         $service_account_key = $this->config['service_account_key'];
         
         $SCOPES = implode(' ', [Gmail::GMAIL_SEND]);
@@ -38,7 +37,7 @@ class GmailTransport extends AbstractTransport
             if (!$refreshToken) {
                 throw new Exception("refresh token not found in " . $service_account_key);
             }
-            
+
             $this->client->fetchAccessTokenWithRefreshToken($refreshToken);
             file_put_contents($service_account_key, json_encode($this->client->getAccessToken()));
         }
